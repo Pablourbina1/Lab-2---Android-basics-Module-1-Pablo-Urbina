@@ -7,6 +7,10 @@ package com.curso.android.module1.dice
 // En Kotlin/Android, usamos import para traer clases y funciones externas.
 // =============================================================================
 
+
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.background
+
 // --- Android Core ---
 // Bundle: Contenedor de datos que Android usa para pasar información entre componentes
 // Log: Clase para imprimir mensajes de depuración en Logcat
@@ -478,6 +482,8 @@ fun DiceRollerScreen() {
             verticalArrangement = Arrangement.Center             // Centra verticalmente
         ) {
 
+
+
             // -----------------------------------------------------------------
             // SECCIÓN: VALOR DEL DADO
             // -----------------------------------------------------------------
@@ -485,21 +491,11 @@ fun DiceRollerScreen() {
              * Box es un layout que apila sus hijos uno encima del otro.
              * Lo usamos aquí para centrar el número del dado.
              */
-            Box(
-                modifier = Modifier
-                    .size(200.dp),  // Tamaño fijo de 200x200 dp
-                contentAlignment = Alignment.Center
-            ) {
-                // Texto grande mostrando el valor del dado
-                Text(
-                    text = diceValue.toString(),
-                    fontSize = 96.sp,  // Tamaño de fuente grande
-                    fontWeight = FontWeight.Bold,
-                    // Color condicional basado en el valor
-                    color = getDiceValueColor(diceValue, isRolling),
-                    textAlign = TextAlign.Center
-                )
-            }
+
+            StatRow(name = "VIT", value = diceValue,
+                rolling = isRolling, onRoll = {
+                    rollDice()
+                })
 
             // Espacio vertical entre elementos
             Spacer(modifier = Modifier.height(24.dp))
@@ -532,30 +528,7 @@ fun DiceRollerScreen() {
              * - enabled: Si es false, el botón está deshabilitado (gris)
              * - colors: Personaliza los colores del botón
              */
-            Button(
-                onClick = { rollDice() },  // Llama a nuestra función al hacer clic
-                enabled = !isRolling,      // Deshabilitado mientras rueda
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    disabledContainerColor = MaterialTheme.colorScheme.outline
-                )
-            ) {
-                // Contenido del botón: ícono + texto
-                Icon(
-                    imageVector = Icons.Default.Refresh,  // Ícono de "refresh"
-                    contentDescription = "Lanzar dado",   // Accesibilidad
-                    modifier = Modifier.size(24.dp)
-                )
-                Spacer(modifier = Modifier.size(8.dp))
-                Text(
-                    text = if (isRolling) "LANZANDO..." else "LANZAR D20",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
+
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -567,6 +540,55 @@ fun DiceRollerScreen() {
             )
         }
     }
+}
+
+
+@Composable
+fun StatRow(name: String, value: Int, rolling: Boolean, onRoll: () -> Unit) {
+
+    Row(
+        modifier = Modifier
+            .size(200.dp),  // Tamaño fijo de 200x200 dp
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        // Texto grande mostrando el valor del dado
+        Text(
+            text = value.toString(),
+            fontSize = 96.sp,  // Tamaño de fuente grande
+            fontWeight = FontWeight.Bold,
+            // Color condicional basado en el valor
+            color = getDiceValueColor(value, rolling),
+            textAlign = TextAlign.Center
+        )
+
+        Button(
+            onClick = { onRoll() },  // Llama a nuestra función al hacer clic
+            enabled = !rolling,      // Deshabilitado mientras rueda
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                disabledContainerColor = MaterialTheme.colorScheme.outline
+            )
+        ) {
+            // Contenido del botón: ícono + texto
+            Icon(
+                imageVector = Icons.Default.Refresh,  // Ícono de "refresh"
+                contentDescription = "Lanzar dado",   // Accesibilidad
+                modifier = Modifier.size(24.dp)
+            )
+            Spacer(modifier = Modifier.size(8.dp))
+            Text(
+                text = if (rolling) "LANZANDO..." else "LANZAR D20",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+    }
+
+
 }
 
 // =============================================================================

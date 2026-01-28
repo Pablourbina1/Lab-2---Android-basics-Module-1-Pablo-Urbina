@@ -359,7 +359,7 @@ fun DiceRollerScreen() {
      * Si el valor se preserva, el mensaje también debería.
      */
     var resultMessage by rememberSaveable { mutableStateOf("Toca el botón para lanzar") }
-
+    var totalScore: Pair<String, Color> by remember { mutableStateOf<Pair<String, Color>>("Inicio" to Color.Gray) }
     // =========================================================================
     // COROUTINE SCOPE
     // =========================================================================
@@ -448,7 +448,11 @@ fun DiceRollerScreen() {
                 else -> "Resultado: $finalValue"        // Cualquier otro valor
             }
 
-
+            totalScore = when {
+                total < 30 -> "Total: $total, Re-roll recommended!" to Color.Red
+                total >= 50 -> "Total: $total, Godlike!" to Color(0xFFFFD700) // dorado
+                else -> "Total: $total" to Color.Gray
+            }
 
 
             // Paso 5: Terminar la animación
@@ -549,6 +553,14 @@ fun DiceRollerScreen() {
                 textAlign = TextAlign.Center
             )
 
+            Spacer(modifier = Modifier.height(48.dp))
+            val (message, color) = totalScore
+            Text(
+                text = message,
+                style = MaterialTheme.typography.headlineSmall,
+                color = color,
+                textAlign = TextAlign.Center
+            )
             Spacer(modifier = Modifier.height(48.dp))
 
             // -----------------------------------------------------------------

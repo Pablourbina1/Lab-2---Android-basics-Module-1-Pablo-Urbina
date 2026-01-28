@@ -35,6 +35,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 
 // --- Material 3 Components ---
 // Componentes de UI siguiendo Material Design 3
@@ -337,7 +338,9 @@ fun DiceRollerScreen() {
      * tipos primitivos (evita boxing/unboxing).
      */
     var diceValue by rememberSaveable { mutableIntStateOf(MIN_DICE_VALUE) }
-
+    var vit by rememberSaveable { mutableIntStateOf(MIN_DICE_VALUE) }
+    var dex by rememberSaveable { mutableIntStateOf(MIN_DICE_VALUE) }
+    var wis by rememberSaveable { mutableIntStateOf(MIN_DICE_VALUE) }
     /**
      * Indica si el dado está "rodando" (animándose).
      * Mientras es true, el botón está deshabilitado.
@@ -492,12 +495,26 @@ fun DiceRollerScreen() {
              * Lo usamos aquí para centrar el número del dado.
              */
 
-            StatRow(name = "VIT", value = diceValue,
+            StatRow(name = "VIT", value = vit,
                 rolling = isRolling, onRoll = {
                     rollDice()
                 })
 
             // Espacio vertical entre elementos
+            Spacer(modifier = Modifier.height(24.dp))
+
+            StatRow(name = "DEX", value = dex,
+                rolling = isRolling, onRoll = {
+                    rollDice()
+                })
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            StatRow(name = "WIS", value = wis,
+                rolling = isRolling, onRoll = {
+                    rollDice()
+                })
+
             Spacer(modifier = Modifier.height(24.dp))
 
             // -----------------------------------------------------------------
@@ -547,15 +564,23 @@ fun DiceRollerScreen() {
 fun StatRow(name: String, value: Int, rolling: Boolean, onRoll: () -> Unit) {
 
     Row(
-        modifier = Modifier
-            .size(200.dp),  // Tamaño fijo de 200x200 dp
-        horizontalArrangement = Arrangement.Center,
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Texto grande mostrando el valor del dado
         Text(
+            text = name,
+            fontSize = 50.sp,  // Tamaño de fuente grande
+            fontWeight = FontWeight.Bold,
+            // Color condicional basado en el valor
+            color = getDiceValueColor(value, rolling),
+            textAlign = TextAlign.Center
+        )
+
+        Text(
             text = value.toString(),
-            fontSize = 96.sp,  // Tamaño de fuente grande
+            fontSize = 50.sp,  // Tamaño de fuente grande
             fontWeight = FontWeight.Bold,
             // Color condicional basado en el valor
             color = getDiceValueColor(value, rolling),
@@ -566,8 +591,8 @@ fun StatRow(name: String, value: Int, rolling: Boolean, onRoll: () -> Unit) {
             onClick = { onRoll() },  // Llama a nuestra función al hacer clic
             enabled = !rolling,      // Deshabilitado mientras rueda
             modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp),
+                .width(width = 150.dp)
+                .height(50.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary,
                 disabledContainerColor = MaterialTheme.colorScheme.outline
@@ -582,7 +607,7 @@ fun StatRow(name: String, value: Int, rolling: Boolean, onRoll: () -> Unit) {
             Spacer(modifier = Modifier.size(8.dp))
             Text(
                 text = if (rolling) "LANZANDO..." else "LANZAR D20",
-                fontSize = 18.sp,
+                fontSize = 12.sp,
                 fontWeight = FontWeight.Bold
             )
         }

@@ -392,7 +392,8 @@ fun DiceRollerScreen() {
      * 3. Muestra el resultado final
      * 4. Reactiva el botón
      */
-    fun rollDice() {
+    fun rollDice(name: String) {
+
         // Log para depuración - aparece en Logcat
         Log.d(TAG, "rollDice: Iniciando lanzamiento del dado")
 
@@ -412,7 +413,13 @@ fun DiceRollerScreen() {
                 // (MIN_DICE_VALUE..MAX_DICE_VALUE) crea un IntRange
                 // .random() selecciona un elemento aleatorio del rango
                 diceValue = (MIN_DICE_VALUE..MAX_DICE_VALUE).random()
-
+                if (name.equals("VIT")){
+                    vit = diceValue
+                } else if (name.equals("DEX")) {
+                    dex = diceValue
+                } else if (name.equals("WIS")) {
+                    wis = diceValue
+                }
                 Log.d(TAG, "rollDice: Iteración ${iteration + 1}/$ANIMATION_ITERATIONS, valor temporal: $diceValue")
 
                 // delay() es una función de SUSPENSIÓN
@@ -424,15 +431,25 @@ fun DiceRollerScreen() {
             // Paso 3: Generar el resultado final
             val finalValue = (MIN_DICE_VALUE..MAX_DICE_VALUE).random()
             diceValue = finalValue
-
+            if (name.equals("VIT")){
+                vit = diceValue
+            } else if (name.equals("DEX")) {
+                dex = diceValue
+            } else if (name.equals("WIS")) {
+                wis = diceValue
+            }
             Log.d(TAG, "rollDice: Resultado final: $finalValue")
-
+            val total = vit + dex + wis
             // Paso 4: Determinar el mensaje según el resultado
             resultMessage = when (finalValue) {
+
                 MAX_DICE_VALUE -> "¡CRITICAL HIT! ⚔️"   // 20 es crítico positivo
                 MIN_DICE_VALUE -> "¡CRITICAL MISS! 💀"  // 1 es crítico negativo
                 else -> "Resultado: $finalValue"        // Cualquier otro valor
             }
+
+
+
 
             // Paso 5: Terminar la animación
             isRolling = false
@@ -497,7 +514,7 @@ fun DiceRollerScreen() {
 
             StatRow(name = "VIT", value = vit,
                 rolling = isRolling, onRoll = {
-                    rollDice()
+                    rollDice("VIT")
                 })
 
             // Espacio vertical entre elementos
@@ -505,14 +522,14 @@ fun DiceRollerScreen() {
 
             StatRow(name = "DEX", value = dex,
                 rolling = isRolling, onRoll = {
-                    rollDice()
+                    rollDice("DEX")
                 })
 
             Spacer(modifier = Modifier.height(24.dp))
 
             StatRow(name = "WIS", value = wis,
                 rolling = isRolling, onRoll = {
-                    rollDice()
+                    rollDice("WIS")
                 })
 
             Spacer(modifier = Modifier.height(24.dp))

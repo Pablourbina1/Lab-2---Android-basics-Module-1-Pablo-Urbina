@@ -74,5 +74,6 @@ fun Semaforo() {
 @Composable
 fun SemaforoPreview() {
     MaterialTheme {
+
     }
 }

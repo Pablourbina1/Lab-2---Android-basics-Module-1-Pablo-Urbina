@@ -110,22 +110,37 @@ fun Semaforo() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            Luz()
-            Luz()
-            Luz()
+            Box (
+                modifier = Modifier
+                    .size(150.dp)
+                    .clip(CircleShape)
+                    .background(
+                        if(state == Light.Red) Color.Red else Color.Gray
+                    )
+            )
+
+            Box (
+                modifier = Modifier
+                    .size(150.dp)
+                    .clip(CircleShape)
+                    .background(
+                        if(state == Light.Green) Color.Green else Color.Gray
+                    )
+            )
+
+            Box (
+                modifier = Modifier
+                    .size(150.dp)
+                    .clip(CircleShape)
+                    .background(
+                        if(state == Light.Yellow) Color.Yellow else Color.Gray
+                    )
+            )
         }
     }
 }
 
-@Composable
-fun Luz(){
-    Box (
-        modifier = Modifier
-            .size(150.dp)
-            .clip(CircleShape)
-            .background(Color.Gray)
-    )
-}
+
 @Preview(
     showBackground = true,
     showSystemUi = true,

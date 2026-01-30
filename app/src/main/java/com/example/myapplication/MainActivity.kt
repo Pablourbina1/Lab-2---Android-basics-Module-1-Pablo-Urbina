@@ -8,13 +8,34 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.saveable.rememberSaveable
+// Composables
+import androidx.compose.runtime.Composable
+
+// Layouts
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.size
+
+// UI base
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+
+// Box
+import androidx.compose.foundation.layout.Box
+
+// Shapes
+import androidx.compose.foundation.shape.CircleShape
+
+// Graphics
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.background
+
+// Colors
+import androidx.compose.ui.graphics.Color
 
 
 import androidx.compose.runtime.remember
@@ -31,6 +52,23 @@ import androidx.compose.foundation.layout.Box
 
 import kotlinx.coroutines.delay
 //ENUM
+
+// Composable
+
+// Layouts
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+
+// Alignment & Arrangement
+import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.Arrangement
+
+
+
+// Units
+import androidx.compose.ui.unit.dp
+
 enum class Light { Red, Yellow, Green }
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,9 +100,32 @@ fun Semaforo() {
             state = Light.Yellow
             delay(1000)
         }
+
+    }
+    Column (
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(20.dp)
+        ) {
+            Luz()
+            Luz()
+            Luz()
+        }
     }
 }
 
+@Composable
+fun Luz(){
+    Box (
+        modifier = Modifier
+            .size(150.dp)
+            .clip(CircleShape)
+            .background(Color.Gray)
+    )
+}
 @Preview(
     showBackground = true,
     showSystemUi = true,

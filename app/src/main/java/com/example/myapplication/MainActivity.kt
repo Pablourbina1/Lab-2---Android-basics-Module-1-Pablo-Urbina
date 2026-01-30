@@ -13,6 +13,9 @@ import com.example.myapplication.ui.theme.MyApplicationTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.ui.text.style.TextAlign
+
 // Composables
 import androidx.compose.runtime.Composable
 
@@ -63,11 +66,13 @@ import androidx.compose.foundation.layout.padding
 // Alignment & Arrangement
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.Arrangement
-
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 
 
 // Units
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 enum class Light { Red, Yellow, Green }
 class MainActivity : ComponentActivity() {
@@ -102,42 +107,64 @@ fun Semaforo() {
         }
 
     }
-    Column (
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(20.dp)
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ){
+
+    Card(modifier = Modifier
+        .size(width = 300.dp, height = 700.dp),
+            colors = CardDefaults.cardColors(
+            containerColor = Color.Black
+            )
         ) {
-            Box (
-                modifier = Modifier
-                    .size(150.dp)
-                    .clip(CircleShape)
-                    .background(
-                        if(state == Light.Red) Color.Red else Color.Gray
-                    )
-            )
 
-            Box (
-                modifier = Modifier
-                    .size(150.dp)
-                    .clip(CircleShape)
-                    .background(
-                        if(state == Light.Green) Color.Green else Color.Gray
-                    )
-            )
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically)
+            ) {
+                Text(
+                    text = "Semaforo Funcional",
+                    fontSize = 30.sp,
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(16.dp),
 
-            Box (
-                modifier = Modifier
-                    .size(150.dp)
-                    .clip(CircleShape)
-                    .background(
-                        if(state == Light.Yellow) Color.Yellow else Color.Gray
                     )
-            )
-        }
+
+                Box (
+                    modifier = Modifier
+                        .size(150.dp)
+                        .clip(CircleShape)
+                        .background(
+                            if(state == Light.Red) Color.Red else Color.Gray
+                        )
+                )
+
+                Box (
+                    modifier = Modifier
+                        .size(150.dp)
+                        .clip(CircleShape)
+                        .background(
+                            if(state == Light.Green) Color.Green else Color.Gray
+                        )
+                )
+
+                Box (
+                    modifier = Modifier
+                        .size(150.dp)
+                        .clip(CircleShape)
+                        .background(
+                            if(state == Light.Yellow) Color.Yellow else Color.Gray
+                        )
+                )
+            }
+
     }
+        }
+
 }
 
 

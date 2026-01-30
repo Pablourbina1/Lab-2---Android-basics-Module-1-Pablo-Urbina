@@ -63,6 +63,9 @@ lifecycleRuntimeKtx = "2.8.7"
 # especificar la versión de cada biblioteca Compose individualmente.
 # Esto garantiza que todas las bibliotecas Compose sean compatibles entre sí.
 composeBom = "2025.05.01"
+junit = "4.13.2"
+junitVersion = "1.3.0"
+espressoCore = "3.7.0"
 
 # -----------------------------------------------------------------------------
 # SECCIÓN DE BIBLIOTECAS (DEPENDENCIAS)
@@ -137,6 +140,9 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 #     minimizar el tamaño del APK
 # ===============================================================================
 androidx-compose-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 
 # -----------------------------------------------------------------------------
 # SECCIÓN DE PLUGINS

@@ -7,7 +7,7 @@ package com.curso.android.module1.dice
 // En Kotlin/Android, usamos import para traer clases y funciones externas.
 // =============================================================================
 
-
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.background
 
@@ -36,6 +36,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 
 // --- Material 3 Components ---
 // Componentes de UI siguiendo Material Design 3
@@ -43,6 +44,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -497,6 +500,7 @@ fun DiceRollerScreen() {
          * Modifier es el sistema de Compose para modificar la apariencia
          * y comportamiento de un Composable. Los modifiers se encadenan.
          */
+
         Column(
             modifier = Modifier
                 .fillMaxSize()                     // Ocupa todo el espacio disponible
@@ -536,7 +540,7 @@ fun DiceRollerScreen() {
                     rollDice("WIS")
                 })
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             // -----------------------------------------------------------------
             // SECCIÓN: MENSAJE DE RESULTADO
@@ -592,55 +596,68 @@ fun DiceRollerScreen() {
 @Composable
 fun StatRow(name: String, value: Int, rolling: Boolean, onRoll: () -> Unit) {
 
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically
+    Card(
+        modifier = Modifier.wrapContentSize(),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.LightGray.copy(alpha = 0.4f)
+        ),
+        border = BorderStroke(2.dp,
+            if (name.equals("VIT")) Color.Red
+            else if (name.equals("DEX")) Color.Blue
+        else Color.Yellow)
     ) {
-        // Texto grande mostrando el valor del dado
-        Text(
-            text = name,
-            fontSize = 50.sp,  // Tamaño de fuente grande
-            fontWeight = FontWeight.Bold,
-            // Color condicional basado en el valor
-            color = getDiceValueColor(value, rolling),
-            textAlign = TextAlign.Center
-        )
-
-        Text(
-            text = value.toString(),
-            fontSize = 50.sp,  // Tamaño de fuente grande
-            fontWeight = FontWeight.Bold,
-            // Color condicional basado en el valor
-            color = getDiceValueColor(value, rolling),
-            textAlign = TextAlign.Center
-        )
-
-        Button(
-            onClick = { onRoll() },  // Llama a nuestra función al hacer clic
-            enabled = !rolling,      // Deshabilitado mientras rueda
-            modifier = Modifier
-                .width(width = 150.dp)
-                .height(50.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-                disabledContainerColor = MaterialTheme.colorScheme.outline
-            )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            // Contenido del botón: ícono + texto
-            Icon(
-                imageVector = Icons.Default.Refresh,  // Ícono de "refresh"
-                contentDescription = "Lanzar dado",   // Accesibilidad
-                modifier = Modifier.size(24.dp)
-            )
-            Spacer(modifier = Modifier.size(8.dp))
+
+            // Texto grande mostrando el valor del dado
             Text(
-                text = if (rolling) "LANZANDO..." else "LANZAR D20",
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Bold
+                text = name,
+                fontSize = 40.sp,  // Tamaño de fuente grande
+                fontWeight = FontWeight.Bold,
+                // Color condicional basado en el valor
+                color = getDiceValueColor(value, rolling),
+                textAlign = TextAlign.Center
             )
+
+            Text(
+                text = value.toString(),
+                fontSize = 40.sp,  // Tamaño de fuente grande
+                fontWeight = FontWeight.Bold,
+                // Color condicional basado en el valor
+                color = getDiceValueColor(value, rolling),
+                textAlign = TextAlign.Center
+            )
+
+            Button(
+                onClick = { onRoll() },  // Llama a nuestra función al hacer clic
+                enabled = !rolling,      // Deshabilitado mientras rueda
+                modifier = Modifier
+                    .width(width = 150.dp)
+                    .height(40.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    disabledContainerColor = MaterialTheme.colorScheme.outline
+                )
+            ) {
+                // Contenido del botón: ícono + texto
+                Icon(
+                    imageVector = Icons.Default.Refresh,  // Ícono de "refresh"
+                    contentDescription = "Lanzar dado",   // Accesibilidad
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(modifier = Modifier.size(8.dp))
+                Text(
+                    text = if (rolling) "LANZANDO..." else "LANZAR D20",
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         }
     }
+
 
 
 }

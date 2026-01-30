@@ -91,3 +91,4 @@ rootProject.name = "RPGDiceRollerApp"
 //   etc.
 // -----------------------------------------------------------------------------
 include(":app")
+include(":app:myapplication")

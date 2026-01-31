@@ -1,6 +1,6 @@
 # RPG Dice Roller
 ## Primer ejercicio del Laboratorio 1
-### Link del video de explicación: https://drive.google.com/file/d/1Yy2nFtHbhzpMMvnZF3nYZg5cw9E2orG7/view?usp=drive_link
+### Link del video de explicación: https://drive.google.com/file/d/1mHgWgrtCZ0bcnXsN2xxlvb0_830jhrEL/view?usp=drive_link
 Este proyecto consiste en editar el proyecto del dado ya existente de tal forma que sirva como un dado para obtener 3 estadisticas principales para un personaje:
 - VIT
 - DEX
